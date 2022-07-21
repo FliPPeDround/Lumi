@@ -38,15 +38,15 @@ async function createWindow() {
   win = new BrowserWindow({
     title: 'Main window',
     icon: join(ROOT_PATH.public, 'favicon.ico'),
+    // autoHideMenuBar: false,
+    type: 'desktop',
     webPreferences: {
       preload,
       nodeIntegration: true,
       contextIsolation: false,
     },
   })
-  win.setAlwaysOnTop(false, 'torn-off-menu')
   win.setSimpleFullScreen(true)
-
   if (app.isPackaged) {
     win.loadFile(indexHtml)
   } else {
