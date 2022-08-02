@@ -1,16 +1,43 @@
 import { rmSync } from 'fs'
-import { join } from 'path'
+import path, { join } from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import electron from 'vite-plugin-electron'
+import Components from 'unplugin-vue-components/vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import Unocss from 'unocss/vite'
 import pkg from './package.json'
 
 rmSync('dist', { recursive: true, force: true }) // v14.14.0
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@/': `${path.resolve(__dirname, 'src')}/`,
+    },
+  },
   plugins: [
-    vue(),
+    vue({
+      reactivityTransform: true,
+    }),
+    AutoImport({
+      imports: [
+        'vue',
+        'vue/macros',
+        'vue-router',
+        '@vueuse/core',
+      ],
+      dts: true,
+      dirs: [
+        './src/composables',
+      ],
+      vueTemplate: true,
+    }),
+    Components({
+      dts: true,
+    }),
+    Unocss(),
     electron({
       main: {
         entry: 'electron/main/index.ts',

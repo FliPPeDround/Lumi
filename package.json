@@ -1,32 +1,10 @@
 {
-  "name": "electron-vue-vite",
-  "version": "2.0.0",
-  "main": "dist/electron/main/index.js",
-  "description": "Really simple Electron + Vue + Vite boilerplate.",
-  "author": "草鞋没号 <308487730@qq.com>",
-  "license": "MIT",
+  "name": "lumi",
+  "version": "0.0.1",
   "private": true,
-  "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build && electron-builder"
-  },
-  "engines": {
-    "node": ">=14.17.0"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^2.3.3",
-    "electron": "^19.0.8",
-    "electron-builder": "^23.1.0",
-    "typescript": "^4.7.4",
-    "vite": "^2.9.13",
-    "vite-plugin-electron": "^0.7.5",
-    "vue": "^3.2.37",
-    "vue-tsc": "^0.38.3"
-  },
-  "env": {
-    "VITE_DEV_SERVER_HOST": "127.0.0.1",
-    "VITE_DEV_SERVER_PORT": 3344
-  },
+  "description": "YoyoLumi Desktop",
+  "author": "FlippeDround <734243792@qq.com>",
+  "license": "MIT",
   "keywords": [
     "electron",
     "rollup",
@@ -34,7 +12,38 @@
     "vue3",
     "vue"
   ],
-  "dependencies": {
+  "main": "dist/electron/main/index.js",
+  "engines": {
+    "node": ">=14.17.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "lint": "eslint .",
+    "test": "vitest",
+    "build": "vue-tsc --noEmit && vite build && electron-builder"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.25.2",
+    "@iconify-json/carbon": "^1.1.7",
+    "@unocss/reset": "^0.45.1",
+    "@vitejs/plugin-vue": "3.0.1",
+    "@vueuse/core": "^9.0.2",
+    "electron": "20.0.0",
+    "electron-builder": "23.3.3",
+    "eslint": "^8.21.0",
+    "typescript": "4.7.4",
+    "unocss": "^0.45.1",
+    "unplugin-auto-import": "^0.10.3",
+    "unplugin-vue-components": "^0.21.2",
+    "vite": "3.0.4",
+    "vite-plugin-electron": "0.8.4",
+    "vitest": "^0.20.2",
+    "vue": "3.2.37",
+    "vue-tsc": "0.39.4",
     "wallpaper": "^6.1.1"
+  },
+  "env": {
+    "VITE_DEV_SERVER_HOST": "127.0.0.1",
+    "VITE_DEV_SERVER_PORT": 3344
   }
 }
