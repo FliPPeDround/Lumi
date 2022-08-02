@@ -1,9 +1,13 @@
 import { createApp } from 'vue'
-import App from './App.vue'
 // import './samples/node-api'
+import App from './App.vue'
 
-createApp(App)
-  .mount('#app')
-  .$nextTick(() => {
-    postMessage({ payload: 'removeLoading' }, '*')
-  })
+import '@unocss/reset/tailwind.css'
+import './style/main.css'
+import 'uno.css'
+
+const app = createApp(App)
+app.mount('#app').$nextTick(() => {
+  postMessage({ payload: 'removeLoading' }, '*')
+})
+
