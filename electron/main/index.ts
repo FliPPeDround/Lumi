@@ -73,6 +73,27 @@ async function createWindow() {
   })
 }
 
+// create DesktopWindow
+let desktopWin: BrowserWindow | null = null
+function openDesktopWindow (arg: string) {
+  desktopWin = new BrowserWindow({
+    type: 'desktop',
+    webPreferences: {
+      preload,
+    },
+  })
+  desktopWin.setSimpleFullScreen(true)
+
+  if (app.isPackaged)
+    desktopWin.loadFile(indexHtml, { hash: arg })
+
+  else
+    desktopWin.loadURL(`${url}/#${arg}`)
+}
+ipcMain.on('openDesktopWindow', (event: Electron.IpcMainInvokeEvent, arg: string) => {
+  openDesktopWindow(arg)
+})
+
 app.whenReady().then(createWindow)
 
 app.on('window-all-closed', () => {
@@ -100,17 +121,17 @@ app.on('activate', () => {
 })
 
 // new window example arg: new windows url
-ipcMain.handle('open-win', (event, arg) => {
-  const childWindow = new BrowserWindow({
-    webPreferences: {
-      preload,
-    },
-  })
+// ipcMain.handle('open-win', (event, arg) => {
+//   const childWindow = new BrowserWindow({
+//     webPreferences: {
+//       preload,
+//     },
+//   })
 
-  if (app.isPackaged)
-    childWindow.loadFile(indexHtml, { hash: arg })
+//   if (app.isPackaged)
+//     childWindow.loadFile(indexHtml, { hash: arg })
 
-  else
-    childWindow.loadURL(`${url}/#${arg}`)
-    // childWindow.webContents.openDevTools({ mode: "undocked", activate: true })
-})
+//   else
+//     childWindow.loadURL(`${url}/#${arg}`)
+//     // childWindow.webContents.openDevTools({ mode: "undocked", activate: true })
+// })
