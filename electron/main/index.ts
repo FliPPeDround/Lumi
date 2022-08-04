@@ -39,8 +39,7 @@ const indexHtml = join(ROOT_PATH.dist, 'index.html')
 async function createWindow() {
   win = new BrowserWindow({
     icon: join(ROOT_PATH.public, 'app/favicon.ico'),
-    // autoHideMenuBar: false,
-    type: 'desktop',
+    autoHideMenuBar: false,
     width: 1030,
     height: 690,
     frame: false,
@@ -52,7 +51,6 @@ async function createWindow() {
       contextIsolation: false,
     },
   })
-  // win.setSimpleFullScreen(true)
 
   if (app.isPackaged)
     win.loadFile(indexHtml)
@@ -75,7 +73,7 @@ async function createWindow() {
 
 // create DesktopWindow
 let desktopWin: BrowserWindow | null = null
-function openDesktopWindow (arg: string) {
+function openDesktopWindow(arg: string) {
   desktopWin = new BrowserWindow({
     type: 'desktop',
     webPreferences: {
@@ -86,11 +84,10 @@ function openDesktopWindow (arg: string) {
 
   if (app.isPackaged)
     desktopWin.loadFile(indexHtml, { hash: arg })
-
   else
-    desktopWin.loadURL(`${url}/#${arg}`)
+    desktopWin.loadURL(`${url}/${arg}`)
 }
-ipcMain.on('openDesktopWindow', (event: Electron.IpcMainInvokeEvent, arg: string) => {
+ipcMain.handle('openDesktopWindow', (event: Electron.IpcMainInvokeEvent, arg: string) => {
   openDesktopWindow(arg)
 })
 

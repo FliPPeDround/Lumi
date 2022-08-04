@@ -16,6 +16,7 @@ const menuList = [
     flex="~ col"
     justify-between
     pt10 px6 pb5
+    w-100vw
   >
     <div>
       <div mb20>
