@@ -6,7 +6,6 @@ import electron from 'vite-plugin-electron'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
-import Pages from 'vite-plugin-pages'
 import pkg from './package.json'
 
 rmSync('dist', { recursive: true, force: true }) // v14.14.0
@@ -22,7 +21,6 @@ export default defineConfig({
     vue({
       reactivityTransform: true,
     }),
-    Pages(),
     AutoImport({
       imports: [
         'vue',
