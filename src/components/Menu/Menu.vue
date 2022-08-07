@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const menuList = [
   {
-    title: 'yoyo鹿鸣',
+    title: 'Yoyo鹿鸣',
     icon: 'i-carbon-favorite-filled',
     path: '/YoyoLumi',
   },
@@ -20,7 +20,7 @@ const menuList = [
     pt10 px6 pb5
   >
     <div>
-      <div mb20>
+      <div mt10 mb18 text-3xl>
         YoyoLumi
       </div>
       <div flex="~ col" justify-self-start>

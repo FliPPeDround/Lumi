@@ -85,7 +85,7 @@ function openDesktopWindow(arg: string) {
   if (app.isPackaged)
     desktopWin.loadFile(indexHtml, { hash: arg })
   else
-    desktopWin.loadURL(`${url}/${arg}`)
+    desktopWin.loadURL(`${url}/#/${arg}`)
 }
 ipcMain.handle('openDesktopWindow', (event: Electron.IpcMainInvokeEvent, arg: string) => {
   openDesktopWindow(arg)
