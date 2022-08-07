@@ -38,11 +38,11 @@ const indexHtml = join(ROOT_PATH.dist, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({
-    icon: join(ROOT_PATH.public, 'app/favicon.ico'),
-    autoHideMenuBar: false,
+    icon: join(ROOT_PATH.public, 'app/yoyolumi.png'),
+    titleBarStyle: 'hiddenInset',
+    autoHideMenuBar: true,
     width: 1030,
     height: 690,
-    frame: false,
     resizable: false,
     title: 'Lumi',
     webPreferences: {

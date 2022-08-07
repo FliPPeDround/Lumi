@@ -3,10 +3,12 @@ const menuList = [
   {
     title: 'yoyo鹿鸣',
     icon: 'i-carbon-favorite-filled',
+    path: '/YoyoLumi',
   },
   {
     title: '鹿鸣练习室',
     icon: 'i-carbon-boot',
+    path: '/LumiVideo',
   },
 ]
 </script>
@@ -27,6 +29,7 @@ const menuList = [
           :key="item.title"
           :title="item.title"
           :icon="item.icon"
+          :path="item.path"
         />
       </div>
     </div>

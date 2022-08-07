@@ -2,21 +2,26 @@
 interface Props {
   title: string
   icon: string
+  path: string
 }
 
-const { title, icon } = defineProps<Props>()
+const { title, icon, path } = defineProps<Props>()
+const route = useRoute()
+const router = useRouter()
 </script>
 
 <template>
-  <div
-    bg-gradient-to-r
-    from="#38b9bb" to="#36daae"
+  <button
     py="2.5" my3 pl5
     flex
-    c-white leading-normal align-text-top
+    leading-normal align-text-top
     rounded-lg
+    from="#38b9bb" to="#36daae"
+    hover="c-white"
+    :class="{ 'bg-gradient-to-r c-white': route.path === path }"
+    @click="() => router.push(path)"
   >
-    <div :class="`${icon}`" align-middle/>
+    <div :class="`${icon}`" align-middle />
     <span pl2 align-text-top>{{ title }}</span>
-  </div>
+  </button>
 </template>
