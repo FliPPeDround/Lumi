@@ -87,7 +87,7 @@ function openDesktopWindow(arg: string) {
   else
     desktopWin.loadURL(`${url}/#/${arg}`)
 }
-ipcMain.handle('openDesktopWindow', (event: Electron.IpcMainInvokeEvent, arg: string) => {
+ipcMain.handle('openDesktopWindow', async (event: Electron.IpcMainInvokeEvent, arg: string) => {
   openDesktopWindow(arg)
 })
 
