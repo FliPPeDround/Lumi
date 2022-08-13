@@ -2,7 +2,7 @@
 import { useIpcRendererInvoke } from '@vueuse/electron'
 
 const openDesktopWindow = () => {
-  const result = useIpcRendererInvoke<string>('openDesktopWindow', 'desktop')
+  const result = useIpcRendererInvoke<string>('openDesktopWindow', 'desktop/Lumi.mp4')
 }
 </script>
 

@@ -45,6 +45,7 @@ async function createWindow() {
     height: 690,
     resizable: false,
     title: 'Lumi',
+    skipTaskbar: true,
     webPreferences: {
       preload,
       nodeIntegration: true,
@@ -73,22 +74,33 @@ async function createWindow() {
 
 // create DesktopWindow
 let desktopWin: BrowserWindow | null = null
-function openDesktopWindow(arg: string) {
-  desktopWin = new BrowserWindow({
-    type: 'desktop',
-    webPreferences: {
-      preload,
-    },
-  })
-  desktopWin.setSimpleFullScreen(true)
+function openDesktopWindow(path: string) {
+  if (desktopWin) {
+    setDesktopWinLoad(path)
+  }
+  else {
+    desktopWin = new BrowserWindow({
+      type: 'desktop',
+      skipTaskbar: true,
+      webPreferences: {
+        preload,
+      },
+    })
+    desktopWin.setSimpleFullScreen(true)
 
-  if (app.isPackaged)
-    desktopWin.loadFile(indexHtml, { hash: arg })
-  else
-    desktopWin.loadURL(`${url}/#/${arg}`)
+    setDesktopWinLoad(path)
+  }
 }
-ipcMain.handle('openDesktopWindow', async (event: Electron.IpcMainInvokeEvent, arg: string) => {
-  openDesktopWindow(arg)
+
+function setDesktopWinLoad(path: string) {
+  if (app.isPackaged)
+    desktopWin.loadFile(indexHtml, { hash: path })
+  else
+    desktopWin.loadURL(`${url}/#/${path}`)
+}
+
+ipcMain.handle('openDesktopWindow', async (event: Electron.IpcMainInvokeEvent, path: string) => {
+  openDesktopWindow(path)
 })
 
 app.whenReady().then(createWindow)

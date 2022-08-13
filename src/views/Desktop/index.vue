@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import LumiVideo from '/Lumi.mp4'
+// import LumiVideo from '/Lumi.mp4'
 import LumiPoster from '/Lumi.jpeg'
-const width = window.screen.width
-const height = window.screen.height
+const route = useRoute()
 </script>
 
 <template>
-  <video :src="LumiVideo" :poster="LumiPoster" autoplay loop :width="width" :height="height" />
+  <video
+    :src="$route.params.video as string"
+    :poster="LumiPoster"
+    w-full h-full object-fill
+    autoplay loop
+  />
 </template>
 
 <style>

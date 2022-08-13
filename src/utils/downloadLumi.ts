@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { httpAxios } from './httpAxios'
-const { createReadStream, createWriteStream } = fs
+const { createReadStream, createWriteStream, unlinkSync } = fs
 
 // axios.defaults.adapter = require('axios/lib/adapters/http')
 export const downloadLumiVideo = async (url: string, path: string) => {
@@ -28,16 +28,19 @@ export const downloadLumiVideo = async (url: string, path: string) => {
 
       writerStream.on('finish', () => {
         // removeSync('download.ndf')
+        unlinkSync('download.ndf')
       })
 
       writerStream.on('error', (_err) => {
         // removeSync('download.ndf')
+        unlinkSync('download.ndf')
         throw new Error('Error writing file')
       })
     })
 
     readStream.on('error', (_err) => {
       // removeSync('download.ndf')
+      unlinkSync('download.ndf')
       throw new Error('Error reading file')
     })
   })
