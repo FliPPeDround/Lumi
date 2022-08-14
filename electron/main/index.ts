@@ -38,7 +38,7 @@ const indexHtml = join(ROOT_PATH.dist, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({
-    icon: join(ROOT_PATH.public, 'app/yoyolumi.png'),
+    icon: join(ROOT_PATH.public, 'app/favicon.ico'),
     titleBarStyle: 'hiddenInset',
     autoHideMenuBar: true,
     width: 1030,
@@ -74,13 +74,13 @@ async function createWindow() {
 
 // create DesktopWindow
 let desktopWin: BrowserWindow | null = null
-function openDesktopWindow(path: string) {
+function openDesktopWindow(params: string) {
   if (desktopWin) {
-    setDesktopWinLoad(path)
+    setDesktopWinLoad(params)
   }
   else {
     desktopWin = new BrowserWindow({
-      type: 'desktop',
+      // type: 'desktop',
       skipTaskbar: true,
       webPreferences: {
         preload,
@@ -88,19 +88,20 @@ function openDesktopWindow(path: string) {
     })
     desktopWin.setSimpleFullScreen(true)
 
-    setDesktopWinLoad(path)
+    setDesktopWinLoad(params)
   }
 }
 
-function setDesktopWinLoad(path: string) {
+function setDesktopWinLoad(params: string) {
   if (app.isPackaged)
-    desktopWin.loadFile(indexHtml, { hash: path })
+    desktopWin!.loadFile(indexHtml, { hash: `desktop/${params}` })
   else
-    desktopWin.loadURL(`${url}/#/${path}`)
+    desktopWin!.loadURL(`${url}/#/desktop/${params}`)
 }
 
-ipcMain.handle('openDesktopWindow', async (event: Electron.IpcMainInvokeEvent, path: string) => {
-  openDesktopWindow(path)
+ipcMain.handle('openDesktopWindow', async (event: Electron.IpcMainInvokeEvent, params: string) => {
+  console.log(params)
+  openDesktopWindow(params)
 })
 
 app.whenReady().then(createWindow)

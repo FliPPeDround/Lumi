@@ -21,7 +21,7 @@ export const downloadLumiVideo = async (url: string, path: string) => {
 
     readStream.on('end', () => {
       videoHEX = videoHEX.slice(4)
-      const writerStream = createWriteStream(path)
+      const writerStream = createWriteStream(`public/${path}`)
 
       writerStream.write(videoHEX, 'hex')
       writerStream.end()

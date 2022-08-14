@@ -12,18 +12,18 @@ const router = useRouter()
 
 <template>
   <button
+    class="group"
     py="2.5" my3 pl5
     flex items-center
     rounded-lg
     from="#38b9bb" to="#36daae"
-    border="1 #d9dfe7 opacity-100"
-    hover="c-white border-white"
-    :class="{ 'bg-gradient-to-r c-white border-#d9dfe7': route.path === path }"
+    hover="bg-#DCE3EB shadow-sm"
+    :class="{ 'bg-gradient-to-r c-white': route.path === path }"
     @click="() => router.push(path)"
   >
-    <div :class="`${icon}`" text-sm />
-    <span
-      pl2
-    >{{ title }}</span>
+    <div :class="{ 'group-hover:text-#38b9bb': route.path !== path }">
+      <div :class="`${icon}`" text-sm />
+    </div>
+    <span pl2>{{ title }}</span>
   </button>
 </template>

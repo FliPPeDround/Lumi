@@ -22,7 +22,7 @@ const router = createRouter({
       ],
     },
     {
-      path: '/desktop/:video',
+      path: '/desktop/:video/poster/:poster',
       name: 'desktop',
       component: () => import('./../views/Desktop/index.vue'),
     },
