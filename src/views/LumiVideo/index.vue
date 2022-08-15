@@ -12,7 +12,10 @@ const downLoad = async (item: LumiVideoDataType) => {
 }
 
 const openDesktopWindow = (item: LumiVideoDataType) => {
-  const result = useIpcRendererInvoke<string>('openDesktopWindow', `${item.fileName}/poster/asd`)
+  const result = useIpcRendererInvoke<string>('openDesktopWindow', {
+    video: item.fileName,
+    poster: item.poster,
+  })
 }
 </script>
 

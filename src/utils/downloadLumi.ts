@@ -1,8 +1,9 @@
 import fs from 'fs'
+import { join } from 'path'
 import { httpAxios } from './httpAxios'
 const { createReadStream, createWriteStream, unlinkSync } = fs
 
-// axios.defaults.adapter = require('axios/lib/adapters/http')
+const temDownloadPath = join(process.env.HOME!, 'Library', 'Application Support', 'Lumi', 'download.ndf')
 export const downloadLumiVideo = async (url: string, path: string) => {
   const res = await httpAxios({
     method: 'get',
@@ -10,8 +11,8 @@ export const downloadLumiVideo = async (url: string, path: string) => {
     responseType: 'stream',
   })
 
-  res.data.pipe(createWriteStream('download.ndf')).on('finish', () => {
-    const readStream = createReadStream('download.ndf')
+  res.data.pipe(createWriteStream(temDownloadPath)).on('finish', () => {
+    const readStream = createReadStream(temDownloadPath)
     let videoHEX = ''
 
     readStream.setEncoding('hex')
@@ -28,19 +29,19 @@ export const downloadLumiVideo = async (url: string, path: string) => {
 
       writerStream.on('finish', () => {
         // removeSync('download.ndf')
-        unlinkSync('download.ndf')
+        unlinkSync(temDownloadPath)
       })
 
       writerStream.on('error', (_err) => {
         // removeSync('download.ndf')
-        unlinkSync('download.ndf')
+        unlinkSync(temDownloadPath)
         throw new Error('Error writing file')
       })
     })
 
     readStream.on('error', (_err) => {
       // removeSync('download.ndf')
-      unlinkSync('download.ndf')
+      unlinkSync(temDownloadPath)
       throw new Error('Error reading file')
     })
   })

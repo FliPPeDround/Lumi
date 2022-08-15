@@ -18,12 +18,10 @@ const router = useRouter()
     rounded-lg
     from="#38b9bb" to="#36daae"
     hover="bg-#DCE3EB shadow-sm"
-    :class="{ 'bg-gradient-to-r c-white': route.path === path }"
+    :class="{ 'bg-gradient-to-r text-white': route.path === path }"
     @click="() => router.push(path)"
   >
-    <div :class="{ 'group-hover:text-#38b9bb': route.path !== path }">
-      <div :class="`${icon}`" text-sm />
-    </div>
+    <div :class="`${icon}`"  text="sm #38b9bb" />
     <span pl2>{{ title }}</span>
   </button>
 </template>

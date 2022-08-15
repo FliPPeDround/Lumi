@@ -74,16 +74,18 @@ async function createWindow() {
 
 // create DesktopWindow
 let desktopWin: BrowserWindow | null = null
-function openDesktopWindow(params: string) {
+function openDesktopWindow(params: { video: string; poster: string }) {
   if (desktopWin) {
     setDesktopWinLoad(params)
   }
   else {
     desktopWin = new BrowserWindow({
-      // type: 'desktop',
+      type: 'desktop',
       skipTaskbar: true,
       webPreferences: {
         preload,
+        nodeIntegration: true,
+        contextIsolation: false,
       },
     })
     desktopWin.setSimpleFullScreen(true)
@@ -92,15 +94,14 @@ function openDesktopWindow(params: string) {
   }
 }
 
-function setDesktopWinLoad(params: string) {
+function setDesktopWinLoad(params: { video: string; poster: string }) {
   if (app.isPackaged)
-    desktopWin!.loadFile(indexHtml, { hash: `desktop/${params}` })
+    desktopWin!.loadFile(indexHtml, { hash: `desktop/?video=${params.video}&poster=${params.poster}` })
   else
-    desktopWin!.loadURL(`${url}/#/desktop/${params}`)
+    desktopWin!.loadURL(`${url}/#/desktop/?video=${params.video}&poster=${params.poster}`)
 }
 
-ipcMain.handle('openDesktopWindow', async (event: Electron.IpcMainInvokeEvent, params: string) => {
-  console.log(params)
+ipcMain.handle('openDesktopWindow', async (_event: Electron.IpcMainInvokeEvent, params: { video: string; poster: string }) => {
   openDesktopWindow(params)
 })
 
