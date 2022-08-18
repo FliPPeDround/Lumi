@@ -1,6 +1,6 @@
 import { release } from 'os'
 import { join } from 'path'
-import { BrowserWindow, app, ipcMain, shell } from 'electron'
+import { BrowserWindow, app, ipcMain, shell, dialog } from 'electron'
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1'))
@@ -101,8 +101,38 @@ function setDesktopWinLoad(params: { video: string; poster: string }) {
     desktopWin!.loadURL(`${url}/#/desktop/?video=${params.video}&poster=${params.poster}`)
 }
 
-ipcMain.handle('openDesktopWindow', async (_event: Electron.IpcMainInvokeEvent, params: { video: string; poster: string }) => {
+ipcMain.handle('openDesktopWindow', async (_event, params: { video: string; poster: string }) => {
   openDesktopWindow(params)
+})
+
+ipcMain.handle('downloadLumiVideo', async (_event, params: { url: string; path: string }) => {
+  // await downloadLumiVideo(params.url, params.path)
+  let value = 0
+  win.webContents.session.on('will-download', (_event, item) => {
+    item.setSavePath(ROOT_PATH.public + params.path)
+    item.on('updated', (evt, state) => {
+      if (state === 'progressing') {
+        // 此处  用接收到的字节数和总字节数求一个比例  就是进度百分比
+        if (item.getReceivedBytes() && item.getTotalBytes())
+          value = 100 * (item.getReceivedBytes() / item.getTotalBytes())
+        // 把百分比发给渲染进程进行展示
+        win.webContents.send('updateProgressing', value)
+        // mac 程序坞、windows 任务栏显示进度
+        win.setProgressBar(value)
+      }
+    })
+    item.on('done', (_event, state) => {
+      // 如果窗口还在的话，去掉进度条
+      if (!win.isDestroyed())
+        win.setProgressBar(-1)
+
+      // 下载被取消或中断了
+      if (state === 'interrupted')
+        dialog.showErrorBox('下载失败', `文件 ${item.getFilename()} 因为某些原因被中断下载`)
+    })
+  })
+
+  win.webContents.downloadURL(params.url)
 })
 
 app.whenReady().then(createWindow)

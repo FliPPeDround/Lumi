@@ -5,14 +5,18 @@ import { downloadLumiVideo } from '@/utils/downloadLumi'
 import type { LumiVideoDataType } from '@/types/lumiDataType'
 
 const downLoad = async (item: LumiVideoDataType) => {
-  await downloadLumiVideo(
-    item.video,
-    item.fileName,
-  )
+  // await downloadLumiVideo(
+  //   item.video,
+  //   item.fileName,
+  // )
+  const result = useIpcRendererInvoke<string>('downloadLumiVideo', {
+    url: item.video,
+    path: item.fileName,
+  })
 }
 
 const openDesktopWindow = (item: LumiVideoDataType) => {
-  const result = useIpcRendererInvoke<string>('openDesktopWindow', {
+  const result = useIpcRendererInvoke<string>('downloadLumiVideo', {
     video: item.fileName,
     poster: item.poster,
   })
