@@ -1,14 +1,9 @@
 <script setup lang="ts">
 import { useIpcRendererInvoke } from '@vueuse/electron'
 import { lumiVideoData } from './stores/lumiVideo.data'
-import { downloadLumiVideo } from '@/utils/downloadLumi'
 import type { LumiVideoDataType } from '@/types/lumiDataType'
 
 const downLoad = async (item: LumiVideoDataType) => {
-  // await downloadLumiVideo(
-  //   item.video,
-  //   item.fileName,
-  // )
   const result = useIpcRendererInvoke<string>('downloadLumiVideo', {
     url: item.video,
     path: item.fileName,
@@ -16,7 +11,7 @@ const downLoad = async (item: LumiVideoDataType) => {
 }
 
 const openDesktopWindow = (item: LumiVideoDataType) => {
-  const result = useIpcRendererInvoke<string>('downloadLumiVideo', {
+  const result = useIpcRendererInvoke<string>('openDesktopWindow', {
     video: item.fileName,
     poster: item.poster,
   })

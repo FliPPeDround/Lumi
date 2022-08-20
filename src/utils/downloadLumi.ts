@@ -1,11 +1,11 @@
 import fs from 'fs'
 import { join } from 'path'
-import { httpAxios } from './httpAxios'
+import axios from 'axios'
 const { createReadStream, createWriteStream, unlinkSync } = fs
 
 const temDownloadPath = join(process.env.HOME!, 'Library', 'Application Support', 'Lumi', 'download.ndf')
 export const downloadLumiVideo = async (url: string, path: string) => {
-  const res = await httpAxios({
+  const res = await axios({
     method: 'get',
     url,
     responseType: 'stream',

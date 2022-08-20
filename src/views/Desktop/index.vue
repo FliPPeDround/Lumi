@@ -8,7 +8,7 @@ const { video, poster } = route.query as {
 
 <template>
   <video
-    :src="video"
+    :src="`${video}.mp4`"
     :poster="poster"
     w-full h-full object-fill
     autoplay loop

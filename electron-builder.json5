@@ -11,6 +11,7 @@
     "dist"
   ],
   "mac": {
+    "icon": "public/app/lumi2x.png",
     "artifactName": "${productName}_${version}.${ext}",
     "target": [
       "dmg"
