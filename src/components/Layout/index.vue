@@ -10,7 +10,7 @@
       w-full h-91vh
     >
       <Menu w25vw bg="#d9dfe7"/>
-      <main w75vw bg="#eef0f5">
+      <main w75vw bg="#eef0f5" px5>
         <router-view />
       </main>
     </div>

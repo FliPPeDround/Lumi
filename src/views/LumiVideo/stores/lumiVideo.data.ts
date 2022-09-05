@@ -10,7 +10,7 @@ export const lumiVideoData = [
   },
   {
     id: 2,
-    title: '心情好就要慢慢摇',
+    title: '心情好就要慢慢摇~',
     description: 'shakeSlowly',
     fileName: 'packages/shakeSlowly',
     img: 'https://n0va-static.mihoyo.com/desk-portal/2021/06/22/1624357901734_550.ndf',

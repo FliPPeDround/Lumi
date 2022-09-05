@@ -20,7 +20,7 @@ const menuList = [
     pt10 px6 pb5
   >
     <div>
-      <div mt10 mb18 text-3xl>
+      <div mb18 text-3xl>
         YoyoLumi
       </div>
       <div flex="~ col" justify-self-start>

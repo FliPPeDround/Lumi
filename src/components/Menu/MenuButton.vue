@@ -12,7 +12,6 @@ const router = useRouter()
 
 <template>
   <button
-    class="group"
     py="2.5" my3 pl5
     flex items-center
     rounded-lg
@@ -21,7 +20,11 @@ const router = useRouter()
     :class="{ 'bg-gradient-to-r text-white': route.path === path }"
     @click="() => router.push(path)"
   >
-    <div :class="`${icon}`"  text="sm #38b9bb" />
+    <div
+      :class="`${icon}`"
+      text-sm
+      :text="route.path === path ? 'white' : '#38b9bb'"
+    />
     <span pl2>{{ title }}</span>
   </button>
 </template>
