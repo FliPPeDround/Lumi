@@ -54,13 +54,15 @@ useIpcRendererOn('updateProgressing', (event, data: number) => {
           </div>
           {{ item.title }}
         </div>
-        <div>
-          <button btn @click="downLoad(item)">
-            下载: {{ downLoadProgressing }}%
-          </button>
-          <button btn @click="openDesktopWindow(item)">
-            设置桌面
-          </button>
+        <div flex="~ row-reverse">
+          <div bg="#e7f7f7" px-2 py="0.5" rounded-full>
+            <button v-if="true" @click="downLoad(item)">
+              下载: {{ downLoadProgressing }}%
+            </button>
+            <button v-else @click="openDesktopWindow(item)">
+              设置桌面
+            </button>
+          </div>
         </div>
       </div>
     </div>

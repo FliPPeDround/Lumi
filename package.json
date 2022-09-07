@@ -33,6 +33,7 @@
     "@vueuse/math": "^9.1.1",
     "electron": "20.0.0",
     "electron-builder": "23.3.3",
+    "element-plus": "^2.2.16",
     "eslint": "^8.21.0",
     "fs-extra": "^10.1.0",
     "typescript": "4.7.4",

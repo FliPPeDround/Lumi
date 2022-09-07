@@ -12,7 +12,7 @@ const router = useRouter()
 
 <template>
   <button
-    py="2.5" my3 pl5
+    py="2.8" my3 pl5
     flex items-center
     rounded-lg
     from="#38b9bb" to="#36daae"
