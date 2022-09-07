@@ -1,8 +1,8 @@
 import { join } from 'path'
 import { BrowserWindow, app, ipcMain } from 'electron'
 import { downloadFile } from '../utils'
-import { createWindow, mainWin } from './../windows/mainWin'
-import { openDesktopWindow } from './../windows/desktopWin'
+import { createWindow, mainWin } from './mainWin'
+import { openDesktopWindow } from './desktopWin'
 
 if (!app.requestSingleInstanceLock()) {
   app.quit()
@@ -19,7 +19,7 @@ export const ROOT_PATH = {
 const preload = join(__dirname, '../preload/index.js')
 const url = `http://${process.env.VITE_DEV_SERVER_HOST}:${process.env.VITE_DEV_SERVER_PORT}`
 const indexHtml = join(ROOT_PATH.dist, 'index.html')
-
+console.log(indexHtml)
 app.whenReady().then(() => createWindow(preload, indexHtml, url))
 
 app.on('window-all-closed', () => {

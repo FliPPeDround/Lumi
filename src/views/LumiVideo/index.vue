@@ -28,23 +28,23 @@ useIpcRendererOn('updateProgressing', (event, data: number) => {
 useIpcRendererOn('downloadDone', (event, data: boolean) => {
   console.log('downloadDone', data)
   if (data) {
-    getPackageDir()
+    // getPackageDir()
     console.log(lumiVideoList.value)
   }
 })
 
-const packagesPath = join(__dirname, '../../../../../../../../../../../public/packages')
+// const packagesPath = join(__dirname, '../../../../../../../../../../../public/packages')
 // const packagesPath = join(__dirname, '../..')
-console.log(packagesPath)
+// console.log(packagesPath)
 // const packagesPath = join('/packages')
-function getPackageDir() {
-  lumiVideoList.value = readdirSync(packagesPath).map((item) => {
-    return item.replace('.mp4', '')
-  })
-}
+// function getPackageDir() {
+//   lumiVideoList.value = readdirSync(packagesPath).map((item) => {
+//     return item.replace('.mp4', '')
+//   })
+// }
 
 onMounted(() => {
-  getPackageDir()
+  // getPackageDir()
 })
 </script>
 
