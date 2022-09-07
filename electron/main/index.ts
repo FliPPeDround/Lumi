@@ -51,5 +51,5 @@ ipcMain.handle('openDesktopWindow', async (_event, params: { video: string; post
 })
 
 ipcMain.handle('downloadLumiVideo', async (_event, params: { url: string; path: string }) => {
-  downloadFile(mainWin!, params.url, params.path)
+  downloadFile(mainWin!, params.url, join(ROOT_PATH.public, params.path))
 })

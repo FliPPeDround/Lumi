@@ -1,7 +1,14 @@
 <script setup lang="ts">
+import { promises } from 'fs'
 import { useIpcRendererInvoke } from '@vueuse/electron'
 import { lumiVideoData } from './stores/lumiVideo.data'
 import type { LumiVideoDataType } from '@/types/lumiDataType'
+/**
+ * 文件/目录是否存在
+ * @param filePath 文件路径
+ * @returns {Promise<boolean>} true:存在;false:不存在
+ */
+const exists = async (filePath: string) => await promises.access(filePath).then(() => true).catch(_ => false)
 
 const downLoad = async (item: LumiVideoDataType) => {
   const result = useIpcRendererInvoke<string>('downloadLumiVideo', {
@@ -19,14 +26,16 @@ const openDesktopWindow = (item: LumiVideoDataType) => {
 </script>
 
 <template>
-  <h1 text="4xl #424f6b" mt-10vh font-black>鹿鸣练习室</h1>
+  <h1 text="4xl #424f6b" font-black>
+    鹿鸣练习室
+  </h1>
   <div grid="~ cols-3" gap-4 mt-5>
     <div
       v-for="item in lumiVideoData"
       :key="item.id"
       border="white 5"
       rounded-xl
-      hover:shadow-xl
+      hover="shadow-xl cursor-pointer"
       bg-white
     >
       <img rounded-md :src="item.img" :alt="`${item.description} img`">
@@ -41,6 +50,7 @@ const openDesktopWindow = (item: LumiVideoDataType) => {
             <div
               i-carbon-volume-up-filled
               c="#a58dff"
+              scale-90
             />
           </div>
           {{ item.title }}
@@ -50,7 +60,7 @@ const openDesktopWindow = (item: LumiVideoDataType) => {
             下载
           </button>
           <button btn @click="openDesktopWindow(item)">
-            设置
+            设置桌面
           </button>
         </div>
       </div>

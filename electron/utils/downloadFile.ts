@@ -3,7 +3,6 @@ import { dialog } from 'electron'
 import { ntf2mp4 } from './ntf2mp4'
 
 function downloadFile(win: BrowserWindow, url: string, path: string) {
-  path = `public/${path}`
   let value = 0
   win!.webContents.session.on('will-download', (_event, item) => {
     item.setSavePath(`${path}.ndf`)
@@ -16,6 +15,9 @@ function downloadFile(win: BrowserWindow, url: string, path: string) {
         win!.webContents.send('updateProgressing', value)
         // mac 程序坞、windows 任务栏显示进度
         win!.setProgressBar(value)
+      }
+      else if (state === 'interrupted') {
+        dialog.showErrorBox('下载失败', `文件 ${item.getFilename()} 因为某些原因被中断下载`)
       }
     })
     item.on('done', async (_event, state) => {

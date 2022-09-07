@@ -9,10 +9,18 @@
       flex
       w-full h-91vh
     >
-      <Menu w25vw bg="#d9dfe7"/>
-      <main w75vw bg="#eef0f5" px5>
-        <router-view />
-      </main>
+      <Menu w25vw bg="#d9dfe7" />
+      <div flex="~ col" bg="#eef0f5">
+        <div h-10vh w-full />
+        <main
+          class="main-box"
+          w75vw h-81vh
+          px5
+          overflow="x-hidden y-auto"
+        >
+          <router-view />
+        </main>
+      </div>
     </div>
     <Footer
       h-9vh
@@ -22,3 +30,9 @@
     />
   </div>
 </template>
+
+<style>
+.main-box::-webkit-scrollbar {
+    display: none;
+}
+</style>
