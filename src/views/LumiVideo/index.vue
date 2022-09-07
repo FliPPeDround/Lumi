@@ -33,8 +33,8 @@ useIpcRendererOn('downloadDone', (event, data: boolean) => {
   }
 })
 
-// const packagesPath = join(__dirname, '../../../../../../../../../../../public/packages')
-const packagesPath = join(__dirname, '../..')
+const packagesPath = join(__dirname, '../../../../../../../../../../../public/packages')
+// const packagesPath = join(__dirname, '../..')
 console.log(packagesPath)
 // const packagesPath = join('/packages')
 function getPackageDir() {

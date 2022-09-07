@@ -30,7 +30,7 @@ async function createWindow(preload: string, indexHtml: string, url: string) {
     mainWin?.webContents.send('main-process-message', new Date().toLocaleString())
   })
 
-  // Make all links open with the browser, not with the application
+  // Make all links open with the browser, not with the
   mainWin.webContents.setWindowOpenHandler(({ url }) => {
     if (url.startsWith('https:'))
       shell.openExternal(url)

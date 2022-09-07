@@ -1,15 +1,27 @@
 <script setup lang="ts">
-const route = useRoute()
-const { video, poster } = route.query as {
+interface LumiDataType {
   video: string
   poster: string
 }
+const lumiData = ref({
+  video: '',
+  poster: '',
+})
+
+const route = useRoute()
+lumiData.value = route.query as unknown as LumiDataType
+watch(
+  () => route.query as unknown as LumiDataType,
+  (val) => {
+    lumiData.value = val
+  },
+)
 </script>
 
 <template>
   <video
-    :src="`${video}.mp4`"
-    :poster="poster"
+    :src="`${lumiData.video}.mp4`"
+    :poster="lumiData.poster"
     w-full h-full object-fill
     autoplay loop
   />

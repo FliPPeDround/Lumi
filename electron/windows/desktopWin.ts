@@ -1,6 +1,5 @@
 import { BrowserWindow, app } from 'electron'
 
-// eslint-disable-next-line import/no-mutable-exports
 let desktopWin: BrowserWindow | null = null
 function openDesktopWindow(preload: string, indexHtml: string, url: string, params: { video: string; poster: string }) {
   if (desktopWin) {
@@ -23,10 +22,11 @@ function openDesktopWindow(preload: string, indexHtml: string, url: string, para
 }
 
 function setDesktopWinLoad(indexHtml: string, url: string, video: string, poster: string) {
-  if (app.isPackaged)
-    desktopWin!.loadFile(indexHtml, { hash: `desktop/?video=${video}&poster=${poster}` })
-  else
+  if (app.isPackaged) { desktopWin!.loadFile(indexHtml, { hash: `desktop/?video=${video}&poster=${poster}` }) }
+  else {
     desktopWin!.loadURL(`${url}/#/desktop/?video=${video}&poster=${poster}`)
+    desktopWin!.loadURL(`${url}/#/desktop/?video=${video}&poster=${poster}`)
+  }
 }
 
 export {
