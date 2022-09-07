@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import { promises } from 'fs'
-import { useIpcRendererInvoke } from '@vueuse/electron'
+import { useIpcRendererInvoke, useIpcRendererOn } from '@vueuse/electron'
+import { usePrecision } from '@vueuse/math'
 import { lumiVideoData } from './stores/lumiVideo.data'
 import type { LumiVideoDataType } from '@/types/lumiDataType'
-/**
- * 文件/目录是否存在
- * @param filePath 文件路径
- * @returns {Promise<boolean>} true:存在;false:不存在
- */
-const exists = async (filePath: string) => await promises.access(filePath).then(() => true).catch(_ => false)
 
 const downLoad = async (item: LumiVideoDataType) => {
   const result = useIpcRendererInvoke<string>('downloadLumiVideo', {
@@ -23,6 +17,11 @@ const openDesktopWindow = (item: LumiVideoDataType) => {
     poster: item.poster,
   })
 }
+
+const downLoadProgressing = ref(0)
+useIpcRendererOn('updateProgressing', (event, data: number) => {
+  downLoadProgressing.value = Number(data.toFixed(2))
+})
 </script>
 
 <template>
@@ -57,7 +56,7 @@ const openDesktopWindow = (item: LumiVideoDataType) => {
         </div>
         <div>
           <button btn @click="downLoad(item)">
-            下载
+            下载: {{ downLoadProgressing }}%
           </button>
           <button btn @click="openDesktopWindow(item)">
             设置桌面

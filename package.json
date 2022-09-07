@@ -30,6 +30,7 @@
     "@vitejs/plugin-vue": "3.0.1",
     "@vueuse/core": "^9.0.2",
     "@vueuse/electron": "^9.1.0",
+    "@vueuse/math": "^9.1.1",
     "electron": "20.0.0",
     "electron-builder": "23.3.3",
     "eslint": "^8.21.0",
