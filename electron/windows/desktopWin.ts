@@ -16,7 +16,7 @@ function openDesktopWindow(preload: string, indexHtml: string, url: string, para
         contextIsolation: false,
       },
     })
-    desktopWin.setFullScreen(true)
+    desktopWin.setSimpleFullScreen(true)
 
     setDesktopWinLoad(indexHtml, url, params.video, params.poster)
   }

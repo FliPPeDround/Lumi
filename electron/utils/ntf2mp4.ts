@@ -1,10 +1,11 @@
+import type { BrowserWindow } from 'electron'
 // import { join } from 'path'
 import fs from 'fs-extra'
 
 const { createReadStream, createWriteStream, removeSync } = fs
 // const temDownloadPath = join(process.env.HOME!, 'Library', 'Application Support', 'Lumi', 'download.ndf')
 
-async function ntf2mp4(path: string) {
+async function ntf2mp4(path: string, win: BrowserWindow) {
   const readStream = createReadStream(`${path}.ndf`)
   let videoHEX = ''
 
@@ -22,6 +23,7 @@ async function ntf2mp4(path: string) {
 
     writerStream.on('finish', () => {
       removeSync(`${path}.ndf`)
+      win!.webContents.send('downloadDone', true)
     })
 
     writerStream.on('error', (_err) => {

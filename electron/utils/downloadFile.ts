@@ -22,11 +22,9 @@ function downloadFile(win: BrowserWindow, url: string, path: string) {
     })
     item.on('done', async (_event, state) => {
       // 如果窗口还在的话，去掉进度条
-      await ntf2mp4(path)
+      await ntf2mp4(path, win)
       if (!win!.isDestroyed())
         win!.setProgressBar(-1)
-      win!.webContents.send('downloadDone', true)
-
       // 下载被取消或中断了
       if (state === 'interrupted')
         dialog.showErrorBox('下载失败', `文件 ${item.getFilename()} 因为某些原因被中断下载`)

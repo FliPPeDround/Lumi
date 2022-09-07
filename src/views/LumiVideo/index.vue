@@ -14,6 +14,7 @@ const downLoad = async (item: LumiVideoDataType) => {
 }
 
 const openDesktopWindow = (item: LumiVideoDataType) => {
+  console.log(1)
   const result = useIpcRendererInvoke<string>('openDesktopWindow', {
     video: join('/packages', item.fileName),
     poster: item.poster,
@@ -32,8 +33,10 @@ useIpcRendererOn('downloadDone', (event, data: boolean) => {
   }
 })
 
-const packagesPath = join(__dirname, '../../../../../../../../../public/packages')
+// const packagesPath = join(__dirname, '../../../../../../../../../../../public/packages')
+const packagesPath = join(__dirname, '../..')
 console.log(packagesPath)
+// const packagesPath = join('/packages')
 function getPackageDir() {
   lumiVideoList.value = readdirSync(packagesPath).map((item) => {
     return item.replace('.mp4', '')

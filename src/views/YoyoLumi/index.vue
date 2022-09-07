@@ -21,7 +21,7 @@ const openDesktopWindow = () => {
     <h1 text="white 4xl" mb-8>
       鸢尾
     </h1>
-    <div bg-white w-100 h-80 class="set-box" opacity-50 rounded-xl p-3>
+    <div bg-white w-100 h-90 class="set-box" opacity-40 rounded-xl p-3>
       <button btn @click="openDesktopWindow">
         openDesktopWindow
       </button>
