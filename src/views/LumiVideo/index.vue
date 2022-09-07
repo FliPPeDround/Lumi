@@ -5,6 +5,7 @@ import { useIpcRendererInvoke, useIpcRendererOn } from '@vueuse/electron'
 import { lumiVideoData } from './stores/lumiVideo.data'
 import type { LumiVideoDataType } from '@/types/lumiDataType'
 
+const lumiVideoList = ref([] as string[])
 const downLoad = async (item: LumiVideoDataType) => {
   const result = useIpcRendererInvoke<string>('downloadLumiVideo', {
     url: item.video,
@@ -23,19 +24,24 @@ const downLoadProgressing = ref(0)
 useIpcRendererOn('updateProgressing', (event, data: number) => {
   downLoadProgressing.value = Number(data.toFixed(2))
 })
+useIpcRendererOn('downloadDone', (event, data: boolean) => {
+  console.log('downloadDone', data)
+  if (data) {
+    getPackageDir()
+    console.log(lumiVideoList.value)
+  }
+})
 
 const packagesPath = join(__dirname, '../../../../../../../../../public/packages')
 console.log(packagesPath)
 function getPackageDir() {
-  const dir = readdirSync(packagesPath)
-  return dir
-}
-
-const lumiVideoList = ref([] as string[])
-onMounted(() => {
-  lumiVideoList.value = getPackageDir().map((item) => {
+  lumiVideoList.value = readdirSync(packagesPath).map((item) => {
     return item.replace('.mp4', '')
   })
+}
+
+onMounted(() => {
+  getPackageDir()
 })
 </script>
 
@@ -70,11 +76,11 @@ onMounted(() => {
           {{ item.title }}
         </div>
         <div flex="~ row-reverse" hover:cursor-pointer>
-          <div bg="#e7f7f7" px-2 py="0.5" rounded-full>
-            <button v-if="!lumiVideoList.includes(item.fileName)" @click="downLoad(item)">
+          <div text-sm>
+            <button v-if="!lumiVideoList.includes(item.fileName)" download-btn @click="downLoad(item)">
               下载: {{ downLoadProgressing }}%
             </button>
-            <button v-else @click="openDesktopWindow(item)">
+            <button v-else download-btn @click="openDesktopWindow(item)">
               设置桌面
             </button>
           </div>
