@@ -1,8 +1,8 @@
 import { join } from 'path'
 import { BrowserWindow, app, ipcMain } from 'electron'
 import { downloadFile } from '../utils'
-import { createWindow, mainWin } from './mainWin'
-import { openDesktopWindow } from './desktopWin'
+import { createWindow, mainWin } from './../windows/mainWin'
+import { openDesktopWindow } from './../windows/desktopWin'
 
 if (!app.requestSingleInstanceLock()) {
   app.quit()

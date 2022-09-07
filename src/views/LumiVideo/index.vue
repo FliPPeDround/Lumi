@@ -1,19 +1,20 @@
 <script setup lang="ts">
+import { readdirSync } from 'fs'
+import { join } from 'path'
 import { useIpcRendererInvoke, useIpcRendererOn } from '@vueuse/electron'
-import { usePrecision } from '@vueuse/math'
 import { lumiVideoData } from './stores/lumiVideo.data'
 import type { LumiVideoDataType } from '@/types/lumiDataType'
 
 const downLoad = async (item: LumiVideoDataType) => {
   const result = useIpcRendererInvoke<string>('downloadLumiVideo', {
     url: item.video,
-    path: item.fileName,
+    path: join('/packages', item.fileName),
   })
 }
 
 const openDesktopWindow = (item: LumiVideoDataType) => {
   const result = useIpcRendererInvoke<string>('openDesktopWindow', {
-    video: item.fileName,
+    video: join('/packages', item.fileName),
     poster: item.poster,
   })
 }
@@ -21,6 +22,20 @@ const openDesktopWindow = (item: LumiVideoDataType) => {
 const downLoadProgressing = ref(0)
 useIpcRendererOn('updateProgressing', (event, data: number) => {
   downLoadProgressing.value = Number(data.toFixed(2))
+})
+
+const packagesPath = join(__dirname, '../../../../../../../../../public/packages')
+console.log(packagesPath)
+function getPackageDir() {
+  const dir = readdirSync(packagesPath)
+  return dir
+}
+
+const lumiVideoList = ref([] as string[])
+onMounted(() => {
+  lumiVideoList.value = getPackageDir().map((item) => {
+    return item.replace('.mp4', '')
+  })
 })
 </script>
 
@@ -34,7 +49,7 @@ useIpcRendererOn('updateProgressing', (event, data: number) => {
       :key="item.id"
       border="white 5"
       rounded-xl
-      hover="shadow-xl cursor-pointer"
+      hover="shadow-xl"
       bg-white
     >
       <img rounded-md :src="item.img" :alt="`${item.description} img`">
@@ -54,9 +69,9 @@ useIpcRendererOn('updateProgressing', (event, data: number) => {
           </div>
           {{ item.title }}
         </div>
-        <div flex="~ row-reverse">
+        <div flex="~ row-reverse" hover:cursor-pointer>
           <div bg="#e7f7f7" px-2 py="0.5" rounded-full>
-            <button v-if="true" @click="downLoad(item)">
+            <button v-if="!lumiVideoList.includes(item.fileName)" @click="downLoad(item)">
               下载: {{ downLoadProgressing }}%
             </button>
             <button v-else @click="openDesktopWindow(item)">

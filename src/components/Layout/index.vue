@@ -26,7 +26,7 @@
       h-9vh
       w-full
       bg="#f6f7fa"
-      border="t-0.5 gray-50"
+      border="t-0.1 gray-50/20"
     />
   </div>
 </template>

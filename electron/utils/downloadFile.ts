@@ -25,6 +25,7 @@ function downloadFile(win: BrowserWindow, url: string, path: string) {
       await ntf2mp4(path)
       if (!win!.isDestroyed())
         win!.setProgressBar(-1)
+      win!.webContents.send('downloadDone', true)
 
       // 下载被取消或中断了
       if (state === 'interrupted')
