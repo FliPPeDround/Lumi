@@ -14,37 +14,31 @@ const downLoad = async (item: LumiVideoDataType) => {
 }
 
 const openDesktopWindow = (item: LumiVideoDataType) => {
-  console.log(1)
   const result = useIpcRendererInvoke<string>('openDesktopWindow', {
     video: join('/packages', item.fileName),
     poster: item.poster,
   })
 }
 
-const downLoadProgressing = ref(0)
+const downLoadProgressing = ref(-1)
 useIpcRendererOn('updateProgressing', (event, data: number) => {
   downLoadProgressing.value = Number(data.toFixed(2))
+  console.log('downLoadProgressing', downLoadProgressing.value)
 })
 useIpcRendererOn('downloadDone', (event, data: boolean) => {
-  console.log('downloadDone', data)
-  if (data) {
-    // getPackageDir()
-    console.log(lumiVideoList.value)
-  }
+  if (data)
+    getPackageDir()
 })
 
-// const packagesPath = join(__dirname, '../../../../../../../../../../../public/packages')
-// const packagesPath = join(__dirname, '../..')
-// console.log(packagesPath)
-// const packagesPath = join('/packages')
-// function getPackageDir() {
-//   lumiVideoList.value = readdirSync(packagesPath).map((item) => {
-//     return item.replace('.mp4', '')
-//   })
-// }
+const packagesPath = join(__dirname, '../../../../../../../../../public/packages')
+function getPackageDir() {
+  lumiVideoList.value = readdirSync(packagesPath).map((item) => {
+    return item.replace('.mp4', '')
+  })
+}
 
 onMounted(() => {
-  // getPackageDir()
+  getPackageDir()
 })
 </script>
 
@@ -79,11 +73,27 @@ onMounted(() => {
           {{ item.title }}
         </div>
         <div flex="~ row-reverse" hover:cursor-pointer>
-          <div text-sm>
-            <button v-if="!lumiVideoList.includes(item.fileName)" download-btn @click="downLoad(item)">
-              下载: {{ downLoadProgressing }}%
+          <div text-sm items-center flex>
+            <button
+              v-if="!lumiVideoList.includes(item.fileName)"
+              @click="downLoad(item)"
+            >
+              <el-progress
+                v-if="downLoadProgressing >= 0 && downLoadProgressing < 100"
+                type="circle"
+                status="success"
+                :width="20"
+                :stroke-width="4"
+                :percentage="downLoadProgressing"
+              >
+                <div v-if="downLoadProgressing !== 100" i-carbon-pause ml-5px text-8px />
+                <div v-else i-carbon-checkmark ml-5px text-8px />
+              </el-progress>
+              <div v-else download-btn>
+                下载
+              </div>
             </button>
-            <button v-else download-btn @click="openDesktopWindow(item)">
+            <button v-if="lumiVideoList.includes(item.fileName)" download-btn @click="openDesktopWindow(item)">
               设置桌面
             </button>
           </div>

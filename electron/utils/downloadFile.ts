@@ -18,6 +18,8 @@ function downloadFile(win: BrowserWindow, url: string, path: string) {
       }
       else if (state === 'interrupted') {
         dialog.showErrorBox('下载失败', `文件 ${item.getFilename()} 因为某些原因被中断下载`)
+        if (!win!.isDestroyed())
+          win!.setProgressBar(-1)
       }
     })
     item.on('done', async (_event, state) => {
